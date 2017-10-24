@@ -113,6 +113,8 @@ public class ControllerSupreme implements Initializable{
     private DBHandler handler;
     private PreparedStatement pst;
     private ObservableList<usersInfo>data;
+
+    private User user;
   
     @FXML
     private void handleClose(MouseEvent event){
@@ -170,20 +172,27 @@ public class ControllerSupreme implements Initializable{
 				if(i > 1) System.out.print(", ");
 				String colVal = rs2.getString(i);
 				System.out.println(" " + colVal);
+
+				//only have the Operator subclass for now
 				if(colVal.equals("Operator")) {
 					isOperator= true;
+					user = new Operator();
 				}
 				else if(colVal.equals("League Owner")) {
 					isLeagueOwner = true;
+                    user = new Operator();
 				}
 				else if(colVal.equals("Player")) {
 					isPlayer = true;
+                    user = new Operator();
 				}
 				else if(colVal.equals("Advertiser")) {
 					isAdvertiser = true;
+                    user = new Operator();
 				}
 				else if(colVal.equals("Spectator")) {
 					isSpectator = true;
+                    user = new Operator();
 				}
 			}
 			System.out.println("");
@@ -207,7 +216,20 @@ public class ControllerSupreme implements Initializable{
     		while(rs.next()) {
     			count = count+1;
     		}
-    		
+
+            if(count == 1 && confirmedCheck == true) {
+                System.out.print("Login");
+                signInButton.getScene().getWindow().hide();
+                Stage stage = new Stage();
+                Parent root = FXMLLoader.load(getClass().getResource(user.getView("home"))); // getting view w/user class
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.initStyle(StageStyle.UNDECORATED);
+                stage.setResizable(false);
+                stage.getIcons().add(new Image(getClass().getResourceAsStream("arenaIcon.png")));
+                stage.show();
+            }
+            /* Original way with 'if' statements
     		if(count == 1 && confirmedCheck == true && isOperator == false && isLeagueOwner == false && isPlayer == false
     				&& isAdvertiser == false && isSpectator == false) {
     			System.out.print("Login Success Default");
@@ -285,7 +307,7 @@ public class ControllerSupreme implements Initializable{
  		        stage.setResizable(false);
  		        stage.getIcons().add(new Image(getClass().getResourceAsStream("arenaIcon.png")));
  		        stage.show();
-    		}
+    		}*/
 
     		else {
     			System.out.println("Username & Password are incorrect.");

@@ -17,7 +17,7 @@ public class DBHandler{
             System.out.println("ClassNOT FOUND ERROR - DBHandler");
         }
         try{
-        dbconnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/arena","root","zilbot46");
+        dbconnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/arena","root","");
         }
         catch(SQLException e){
             e.printStackTrace();
